@@ -1,9 +1,9 @@
 #   INFO
-#https://pypi.org/project/cryptocompare/ 
+#   https://pypi.org/project/cryptocompare/
+#   https://2miners.com/de/erg-network-difficulty
+#   https://min-api.cryptocompare.com/data/blockchain/mining/calculator?fsyms=ERG&tsyms=USD
 
 from dataclasses import replace
-import json
-import datetime
 from unicodedata import name
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -12,8 +12,6 @@ import cryptocompare
 import re
 from os.path import join
 
-urlERGO = "https://min-api.cryptocompare.com/data/blockchain/mining/calculator?fsyms=ERG&tsyms=USD"
-urlRAVEN = "https://min-api.cryptocompare.com/data/blockchain/mining/calculator?fsyms=RVN&tsyms=USD"
 
 class Profitability:
 
@@ -46,7 +44,29 @@ class Profitability:
     def get_block_reward(self):
 
         block_reward = self.oo[4]
-        return(block_reward)
-        
+        return block_reward
+    
+    def get_mined_blocks_per_day(self):
+
+        #   difficulty/Network_Hashrate = Block_Time
+        blocktime_sec = self.oo[3]
+        blocks_per_day = 86400/blocktime_sec
+        return blocks_per_day
+
+    def get_hashrate_share(self):
+
+        hashrate_share = self.hashrate/self.get_network_hashrate()
+        return hashrate_share
+
+    def get_daily_block_reward(self):
+
+        daily_block_reward = self.get_block_reward()*self.get_mined_blocks_per_day()
+        return daily_block_reward
+
+    def get_daily_mining_income(self):
+
+        daily_mining_income = float(self.get_daily_block_reward())*float(self.get_price())*float(self.get_hashrate_share())
+        return daily_mining_income   
+            
 
 
