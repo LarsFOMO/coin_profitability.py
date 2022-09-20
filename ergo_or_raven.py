@@ -12,7 +12,7 @@ power_consumption_raven = 220
 ergo = Profitability('ERG','USD', hashrate_ergo, power_consumption_ergo)
 raven = Profitability('RVN','USD', hashrate_raven, power_consumption_raven)
 
-print("\nPrice [ERG]: ", ergo.get_price())
+print("\nPrice [ERG]: ", ergo.get_price(), "USD")
 print("Network Hashrate: ", ergo.get_network_hashrate())
 print("Block Reward: ",ergo.get_block_reward())
 print("Mined Blocks/Day: ","%.2f" % ergo.get_mined_blocks_per_day())
